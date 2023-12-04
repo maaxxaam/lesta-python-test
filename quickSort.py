@@ -5,7 +5,7 @@ from time import perf_counter
 def quickSort(array, low = 0, high = None):
     if high is None:
         high = len(array) - 1
-    if low < high:
+    while low < high:
         # choose pivot as median between first, last and mid values
         pivot_candidates = [high, low, low + ((high - low) // 2)]
         pivot_vals = [array[i] for i in pivot_candidates]
@@ -19,16 +19,21 @@ def quickSort(array, low = 0, high = None):
                 continue
             if array[j] <= pivot:
                 (array[i], array[j]) = (array[j], array[i])
-                if i == pivot:
-                    pivot = j
+                if i == pivot_index:
+                    pivot_index = j
                 i += 1
     
         # move pivot to match partition
         (array[i], array[pivot_index]) = (array[pivot_index], array[i])
         pivot = i
-        # recursive calls to the left and the right of pivot
-        quickSort(array, low, pivot - 1)
-        quickSort(array, pivot + 1, high)
+        # make recursive call to smaller region
+        if pivot - low < high - pivot:
+            array = quickSort(array, low, pivot - 1)
+            low = pivot + 1
+        else:
+            quickSort(array, pivot + 1, high)
+            high = pivot - 1
+    return array
 
 if __name__ == "__main__":
     toSort = [list() for _ in range(10)]
