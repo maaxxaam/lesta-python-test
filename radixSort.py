@@ -37,8 +37,7 @@ def radixSort(array: List[int]):
         place += 1
         shift = place << 3
     if positives < size:
-        return array[positives:] + array[:positives]
-    return array
+        array = array[positives:] + array[:positives]
 
 if __name__ == "__main__":
     toSort = [list() for _ in range(10)]

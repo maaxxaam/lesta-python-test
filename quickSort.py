@@ -28,12 +28,11 @@ def quickSort(array, low = 0, high = None):
         pivot = i
         # make recursive call to smaller region
         if pivot - low < high - pivot:
-            array = quickSort(array, low, pivot - 1)
+            quickSort(array, low, pivot - 1)
             low = pivot + 1
         else:
             quickSort(array, pivot + 1, high)
             high = pivot - 1
-    return array
 
 if __name__ == "__main__":
     toSort = [list() for _ in range(10)]
