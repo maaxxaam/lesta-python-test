@@ -3,7 +3,13 @@ from random import randint
 from time import perf_counter
 
 def radixSort(array: List[int]):
-    max_element = max(array)
+    max_element = array[0]
+    positives = 0
+    for item in array:
+        if item > 0:
+            positives += 1
+        if item > max_element:
+            max_element = item
     size = len(array)
     output = array.copy()
     place = 0
@@ -30,6 +36,9 @@ def radixSort(array: List[int]):
         array = output.copy()
         place += 1
         shift = place << 3
+    if positives < size:
+        return array[positives:] + array[:positives]
+    return array
 
 if __name__ == "__main__":
     toSort = [list() for _ in range(10)]
